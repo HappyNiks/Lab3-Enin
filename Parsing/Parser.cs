@@ -101,6 +101,28 @@ namespace Lab3.Parsing {
 				var block = ParseBlock();
 				return new While(condition, block);
 			}
+			if (SkipIf("switch")) {
+				Expect("(");
+				var condition = ParseExpression();
+				Expect(")");
+				Expect("{");
+				var switchBodies = new List<SwitchBody>();
+				while (!SkipIf("}")) {
+					if (CurrentToken.Lexeme == "{") {
+						var block = ParseBlock();
+						switchBodies.Add(new SwitchBody(null, block));
+						Expect("}");
+						break;
+					}
+					else {
+						var caseValue = ParseExpression();
+						Expect(":");
+						var block = ParseBlock();
+						switchBodies.Add(new SwitchBody(caseValue, block));
+					}
+				}
+				return new Switch(condition, switchBodies);
+			}
 			if (SkipIf("var")) {
 				var variable = ParseIdentifier();
 				Expect("=");

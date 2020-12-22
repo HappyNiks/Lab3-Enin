@@ -18,7 +18,7 @@ namespace Lab3 {
 			return programNode;
 		}
 		public static void Main(string[] args) {
-			Interpreter.Run(CheckedParse(SourceFile.Read("../../code.txt")));
+			//Interpreter.Run(CheckedParse(SourceFile.Read("../../code.txt")));
 			CompilingInterpreter.Run(CheckedParse(SourceFile.Read("../../code.txt")));
 		}
 	}

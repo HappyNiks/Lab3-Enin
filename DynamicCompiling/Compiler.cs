@@ -94,6 +94,31 @@ namespace Lab3.DynamicCompiling {
 			cil.Emit(OpCodes.Br, loop);
 			cil.Append(afterLoop);
 		}
+		public void VisitSwitch(Switch switchStatement) {
+			CompileExpression(switchStatement.Condition);
+			var condition = new VariableDefinition(module.TypeSystem.Object);
+			method.Body.Variables.Add(condition);
+			cil.Emit(OpCodes.Stloc, condition);
+			var afterSwitch = Instruction.Create(OpCodes.Nop);
+			foreach (var caseBody in switchStatement.SwitchBodies) {
+				if (caseBody.CaseValue != null) {
+					cil.Emit(OpCodes.Ldloc, condition);
+					CompileExpression(caseBody.CaseValue);
+					EmitRuntimeCall(nameof(Op.Eq));
+					EmitRuntimeCall(nameof(Op.ToBool));
+					var afterCase = Instruction.Create(OpCodes.Nop);
+					cil.Emit(OpCodes.Brfalse, afterCase);
+					CompileBlock(caseBody.Block);
+					cil.Emit(OpCodes.Br, afterSwitch);
+					cil.Append(afterCase);
+				}
+				else {
+					CompileBlock(caseBody.Block);
+					cil.Emit(OpCodes.Br, afterSwitch);
+				}
+			}
+			cil.Append(afterSwitch);
+		}
 		public void VisitExpressionStatement(ExpressionStatement expressionStatement) {
 			CompileExpression(expressionStatement.Expr);
 			cil.Emit(OpCodes.Pop);

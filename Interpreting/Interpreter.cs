@@ -71,6 +71,9 @@ namespace Lab3.Interpreting {
 				RunBlock(whileStatement.Body);
 			}
 		}
+		public void VisitSwitch(Switch switchStatement) {
+			throw new NotSupportedException();
+		}
 		public void VisitExpressionStatement(ExpressionStatement expressionStatement) {
 			Calc(expressionStatement.Expr);
 		}

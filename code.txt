@@ -70,5 +70,10 @@ if (true) {
 	dump(a);
 }
 dump(a);
+switch (2 + 1) {
+	1 + 2: { dump(4); }
+	false: { dump(5); }
+	{ dump(6); }
+}
 /*
 */

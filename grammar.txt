@@ -6,6 +6,7 @@ Statement:
 	VariableAssignment
 	If
 	While
+	Switch
 ExpressionStatement:
 	Expression ';'
 VariableDeclaration:
@@ -16,8 +17,12 @@ If:
 	'if' '(' Expression ')' Block
 While:
 	'while' '(' Expression ')' Block
+Switch:
+	'switch' '(' Expression ')' '{' Case* Block? '}'
 Block:
 	'{' Statement* '}'
+Case:
+	Expression ':' Block
 Expression:
 	Equality
 Equality:

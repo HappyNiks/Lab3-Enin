@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ast\Statements\Switch.cs" />
     <Compile Include="Ast\Statements\VariableDeclaration.cs" />
+    <Compile Include="Ast\SwitchBody.cs" />
     <Compile Include="DynamicCompiling\Compiler.cs" />
     <Compile Include="DynamicCompiling\CompilingInterpreter.cs" />
     <Compile Include="Interpreting\Interpreter.cs" />
